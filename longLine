@@ -1,0 +1,40 @@
+slot = 1
+
+function placeDown()
+  if (turtle.getItemCount(slot) < 1) then
+   slot = slot + 1
+   turtle.select(slot)
+   if (turtle.getItemCount(slot) == 0) then
+     error("Out of blocks")
+   end
+  end
+  turtle.placeDown()
+end
+
+
+function line(distance)
+  for i=1,distance do
+    placeDown()
+    turtle.forward()
+  end
+
+end
+
+function back(dist)
+  for i=1,dist do
+    turtle.back()
+  end
+end
+
+
+for i=1,22 do
+  line(28)
+  back(28)
+  turtle.turnLeft()
+  turtle.forward()
+  turtle.turnRight()
+end
+
+
+
+

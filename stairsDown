@@ -1,0 +1,39 @@
+# inventory slots
+stairs = 1
+cobble = 2
+
+function placeStep()
+  turtle.select(stairs)
+  turtle.turnRight()
+  turtle.turnRight()
+  turtle.placeDown()
+
+  turtle.select(cobble)  
+  turtle.turnLeft()
+  turtle.place()
+  
+  turtle.select(cobble)
+  turtle.turnLeft()
+  turtle.turnLeft()
+  turtle.place()
+
+  turtle.turnRight()
+  turtle.forward()
+  turtle.down()
+end
+
+function doStairs(howMany)
+   turtle.forward()
+   for i=1,howMany do
+     placeStep()  
+   end
+end
+
+local args = { ... }
+if #args ~= 1 then
+  print "Usage: stairsDown <num>"
+else
+  doStairs(args[1])
+end
+  
+        

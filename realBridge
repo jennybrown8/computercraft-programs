@@ -1,0 +1,80 @@
+slot = 1
+function findBlock()
+  turtle.select(slot)
+  while (turtle.getItemCount(slot) == 0 and slot < 17) do
+   slot = slot + 1
+   turtle.select(slot)
+  end
+end
+
+function place() 
+  findBlock()
+  turtle.place()
+end
+
+function placeDown()
+  findBlock()
+  turtle.placeDown()
+end  
+
+function persistentForward()
+  success = false
+  turtle.dig()
+  while(success == false) do 
+   success = turtle.forward()
+   if (success == false) then
+      turtle.dig()
+   end
+  end
+end
+
+function persistentUp()
+  success = false
+  turtle.digUp()
+  while(success == false) do 
+   success = turtle.up()
+   if (success == false) then
+      turtle.digUp()
+   end
+  end
+end
+            
+
+function line(dist)
+  for i=1,dist do
+    turtle.digDown()
+    placeDown()
+
+      turtle.turnRight()      
+      turtle.dig()
+      place()
+      turtle.turnLeft()
+
+      turtle.turnLeft()
+      turtle.dig()
+      place()
+      turtle.turnRight()
+
+    persistentForward()
+  end
+end
+
+function back(dist)
+  for i=1,dist do
+    turtle.back()
+  end
+end
+
+function bridge(dist)
+   turtle.select(1)
+   line(dist)
+   back(dist)
+end
+
+
+local args = { ... }
+if #args ~= 1 then
+  print "Rerun with distance to build; provide 3x blocks."
+else 
+  bridge(args[1])
+end

@@ -1,0 +1,28 @@
+
+function line(dist)
+  for i=1,dist do
+    turtle.digDown()
+    turtle.placeDown()
+    turtle.forward()
+  end
+end
+
+function back(dist)
+  for i=1,dist do
+    turtle.back()
+  end
+end
+
+
+
+for i=1,7 do
+  line(13)
+  back(13)
+  turtle.turnLeft()
+  turtle.forward()
+  turtle.turnRight()
+end
+turtle.turnLeft()
+back(7)
+turtle.turnRight()
+

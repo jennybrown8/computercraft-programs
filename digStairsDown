@@ -1,0 +1,13 @@
+for i=1,8 do
+  while(turtle.detect())  do
+    turtle.digUp()
+    turtle.dig()
+  end
+  turtle.digDown()
+  turtle.dig()
+  turtle.forward()
+  turtle.digDown()
+  turtle.down()
+end
+
+  

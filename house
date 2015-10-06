@@ -1,0 +1,64 @@
+function back(distance)
+  for i=1,distance do
+    turtle.back()
+  end
+end
+
+function line(slot, distance)
+  turtle.select(slot)
+  for i=1,distance do
+    turtle.digDown()
+    turtle.placeDown()
+    turtle.dig()
+    turtle.forward()
+  end
+end
+
+function square(slot, distance)
+  for i=1,4 do
+    line(slot, distance)
+    turtle.turnRight()
+  end  
+end
+
+function roof(slot, size) 
+  line(slot, size+1)
+  back(size+1)
+  for i=1,size do
+    turtle.turnRight()
+    turtle.dig()
+    turtle.forward()
+    turtle.turnLeft()
+    line(slot, size+1)
+    back(size+1)
+  end
+end
+
+
+function house(size)
+  turtle.up()
+  square(1,size)
+  turtle.up()
+  square(1,size)
+  turtle.up()
+  roof(1,size)
+  
+  turtle.turnLeft()
+  for i=1,size do turtle.forward(); end
+  turtle.turnRight()
+  turtle.back()
+  turtle.down()
+  turtle.down()
+  turtle.down()
+  turtle.turnRight()
+  turtle.forward()
+  turtle.turnLeft()
+  turtle.dig()
+  turtle.up()
+  turtle.dig()
+  turtle.up()
+end
+
+
+house(4)
+

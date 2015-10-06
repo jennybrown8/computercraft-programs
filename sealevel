@@ -1,0 +1,27 @@
+function persistentForward()
+  success = false
+  while(success == false) do 
+   success = turtle.forward()
+   if (success == false) then
+      turtle.dig()
+   end
+  end
+end
+
+function persistentUp()
+  success = false
+  while(success == false) do 
+   success = turtle.up()
+   if (success == false) then
+      turtle.digUp()
+   end
+  end
+end
+
+
+
+for i=1,60 do
+  persistentUp()
+end
+
+

@@ -1,0 +1,30 @@
+function layer()
+  turtle.placeDown()
+  turtle.turnRight()
+  turtle.place()
+  turtle.turnLeft()
+  turtle.turnLeft()
+  turtle.forward()
+  turtle.placeDown()
+  turtle.place()
+  turtle.turnRight()
+  turtle.turnRight()
+  turtle.forward()
+  turtle.turnLeft()
+end
+
+function bridge(dist)
+  for i=1,dist do
+    layer()
+    turtle.forward()
+  end
+
+end
+
+local args = { ... }
+if #args ~= 1 then
+  print "How many? Usage: bridge 4"
+else
+  bridge(args[1])
+end
+

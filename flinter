@@ -1,0 +1,10 @@
+howMany = turtle.getItemCount(1)
+
+while (howMany > 0) do
+  howMany = turtle.getItemCount(1)
+
+  turtle.place()
+  turtle.dig()
+ 
+end
+
