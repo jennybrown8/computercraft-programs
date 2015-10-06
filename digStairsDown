@@ -1,11 +1,21 @@
-for i=1,8 do
+local args = { ... }
+if #args ~= 1 then
+  print "Rerun with vertical distance down to dig"
+else 
+  depth=args[1]
+end
+
+
+for i=1,depth do
   while(turtle.detect())  do
     turtle.digUp()
     turtle.dig()
   end
+  turtle.digUp()
   turtle.digDown()
   turtle.dig()
   turtle.forward()
+  turtle.digUp()
   turtle.digDown()
   turtle.down()
 end
