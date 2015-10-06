@@ -1,3 +1,10 @@
+# Creates a house to the forward and right of where the
+# turtle was placed on the ground.  After building the
+# walls and roof, it returns to the starting point, 
+# and digs a door just one block farther right.
+# The turtle waits for its owner above the door.
+
+
 function back(distance)
   for i=1,distance do
     turtle.back()
