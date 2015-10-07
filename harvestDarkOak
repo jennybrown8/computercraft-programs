@@ -1,0 +1,92 @@
+
+-- susceptible to sand/gravel/animals obstructing movement.
+
+function twoWideLayer()
+  turtle.dig()
+  turtle.turnLeft()
+  turtle.dig()
+  turtle.forward()
+  turtle.turnRight()
+  turtle.dig()
+  turtle.turnRight()
+  turtle.forward()
+  turtle.turnLeft() 
+  turtle.digUp()
+  turtle.up()
+end
+
+function fourWideLayer()
+  turtle.dig()  -- 1
+  turtle.turnLeft()
+  turtle.dig()  -- 2
+  turtle.forward()
+  turtle.dig()  -- 3
+  turtle.forward()
+  turtle.turnRight()
+  turtle.dig()  -- 4
+  turtle.forward()
+  turtle.turnRight()
+  turtle.dig()  -- 5
+  turtle.turnLeft()
+  turtle.dig()  -- 6
+  turtle.forward()
+  turtle.turnRight()
+  turtle.dig()  -- 7
+  turtle.forward()
+  turtle.dig()  -- 8
+  turtle.forward()
+  turtle.dig()  -- 9
+  turtle.forward()
+  turtle.turnRight()
+  turtle.dig()  -- 10
+  turtle.forward()
+  turtle.dig()  -- 11
+  turtle.forward()
+  turtle.dig()  -- 12
+  turtle.forward()
+  turtle.turnRight()
+  turtle.dig()  -- 13
+  turtle.forward()
+  turtle.dig()  -- 14
+  turtle.forward()
+  turtle.dig()  -- 15
+
+  -- go back to starting position
+  turtle.back()
+  turtle.turnRight()
+  turtle.dig() -- just in case
+  turtle.forward()
+
+  -- dig up one level so we can go up and repeat.
+  blockAbove = turtle.digUp()
+  turtle.up()
+  return blockAbove
+end
+
+
+
+
+print "Harvesting a dark oak tree.  The turtle expects to"
+print "be at ground level, facing the tree, right-aligned."
+
+turtle.dig()
+turtle.forward()
+
+twoWideLayer()
+
+count = 1
+blockAbove = true
+while (blockAbove==true) do
+  blockAbove = fourWideLayer()
+  count = count + 1
+  if (count > 25) then 
+  -- bail out so we don't go flying through the sky
+   blockAbove = false
+  end
+end
+
+for i=1,count do
+  turtle.down()
+end
+
+
