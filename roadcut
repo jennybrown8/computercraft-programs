@@ -1,0 +1,104 @@
+function digAboveIfIndoors()
+  blockWasAbove = false
+  while (turtle.detectUp()) do
+      blockWasAbove = true
+      turtle.digUp()
+  end
+
+  -- save effort if we're outdoors in the air.
+  if (blockWasAbove) then
+      turtle.up()
+      while (turtle.detectUp()) do
+          turtle.digUp()
+      end
+      turtle.down()
+  end
+end
+
+
+function layer()
+  -- 1
+  if (not turtle.detectDown()) then
+      seekBlockInInventory()
+      turtle.placeDown()
+  end
+
+  -- ceiling above 1
+  digAboveIfIndoors()
+
+  -- 2
+  turtle.turnRight()
+  if (not turtle.detect()) then
+      seekBlockInInventory()
+      turtle.place()
+  end
+  turtle.turnLeft()
+
+  -- clear the path for next layer's #1
+  while (turtle.detect()) do
+      turtle.dig()
+  end
+  turtle.turnLeft()
+
+  -- 3
+  turtle.forward()
+  if (not turtle.detectDown()) then
+      seekBlockInInventory()
+      turtle.placeDown()
+  end
+
+  -- ceiling above 3
+  digAboveIfIndoors()
+
+  -- 4
+  if (not turtle.detect()) then
+      seekBlockInInventory()
+      turtle.place()
+  end
+  turtle.turnRight()
+
+  -- clear path for next layer's #3
+  while (turtle.detect()) do
+      turtle.dig()
+  end
+
+  turtle.turnRight()
+
+  -- 1
+  turtle.forward()
+  turtle.turnLeft()
+  turtle.forward()
+end
+
+function seekBlockInInventory()
+  found = false
+  slot = 1
+  while(not found) do
+     if (turtle.getItemCount(slot) == 0) then
+        slot = slot + 1
+     else
+        found = true
+        turtle.select(slot)
+     end
+     if (slot > 16) then
+        found = true -- abort
+        turtle.select(1)
+     end
+  end
+end
+
+function roadcut(dist)
+  for i=1,dist do
+    layer()
+  end
+end
+
+local args = { ... }
+if #args ~= 1 then
+  print "Cuts a straight and level road and bridges, 2 blocks wide and 3 blocks tall, with low sides.  Preload"
+  print "with cobble and 7 fuel per 1-block distance.  Will keep cutting even after running out of blocks."
+  print "Usage: roadcut 100   for a 100-block distance of road."
+else
+  roadcut(args[1])
+end
+
