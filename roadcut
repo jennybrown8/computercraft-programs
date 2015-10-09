@@ -1,21 +1,65 @@
+-- persistent version of dig, in case of sand
+function dig(dir)
+  succeeded = false
+  count = 0
+  while (not succeeded) do
+      if (dir == "f") then
+          turtle.dig()
+          succeeded = not turtle.detect()
+      elseif (dir == "u") then
+          turtle.digUp()
+          succeeded = not turtle.detectUp()
+      elseif (dir == "d") then
+          turtle.digDown()
+          succeeded = not turtle.detectDown()
+      end 
+      count = count + 1
+      if (count > 40) then
+          error("Aborted dig due to obstruction.")
+      end
+  end
+end
+
+-- persistent version of move, in case of animals
+function move(dir)
+  succeeded = false
+  count = 0
+  while (not succeeded) do
+      if (dir == "f") then
+          succeeded = turtle.forward()
+      elseif (dir == "b") then
+          succeeded = turtle.back()
+      elseif (dir == "u") then
+          succeeded = turtle.up()
+      elseif (dir == "d") then
+          succeeded = turtle.down()
+      end 
+      count = count + 1
+      if (count > 20) then
+          error("Aborted movement due to obstruction.")
+      end
+  end
+end
+
 function digAboveIfIndoors()
   blockWasAbove = false
+  -- when no air above, ensure a 3-block high ceiling.
   while (turtle.detectUp()) do
       blockWasAbove = true
       turtle.digUp()
   end
 
-  -- save effort if we're outdoors in the air.
+  -- save fuel and speed if we're outdoors in the air, by not bothering about the ceiling.
   if (blockWasAbove) then
-      turtle.up()
+      move("u")
       while (turtle.detectUp()) do
           turtle.digUp()
       end
-      turtle.down()
+      move("d")
   end
 end
 
-
+-- one slice of the road
 function layer()
   -- 1
   if (not turtle.detectDown()) then
@@ -35,13 +79,11 @@ function layer()
   turtle.turnLeft()
 
   -- clear the path for next layer's #1
-  while (turtle.detect()) do
-      turtle.dig()
-  end
+  dig("f")
   turtle.turnLeft()
 
   -- 3
-  turtle.forward()
+  move("f")
   if (not turtle.detectDown()) then
       seekBlockInInventory()
       turtle.placeDown()
@@ -58,16 +100,13 @@ function layer()
   turtle.turnRight()
 
   -- clear path for next layer's #3
-  while (turtle.detect()) do
-      turtle.dig()
-  end
-
+  dig("f")
   turtle.turnRight()
 
   -- 1
-  turtle.forward()
+  move("f")
   turtle.turnLeft()
-  turtle.forward()
+  move("f")
 end
 
 function seekBlockInInventory()
@@ -90,6 +129,9 @@ end
 function roadcut(dist)
   for i=1,dist do
     layer()
+    if (i % 10 == 0) then
+        print("Completed " .. i .. " / " .. dist)
+    end
   end
 end
 
